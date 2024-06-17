@@ -2,7 +2,11 @@
   "name": "@nnou/lazy-pipes",
   "version": "1.0.1",
   "tasks": {
-    "dev": "deno run --watch main.ts"
+    "test": "deno test -A --coverage",
+    "coverage:lcov": "deno coverage --lcov --output=./coverage/lcov.info",
+    "coverage:html": "deno coverage --html",
+    "ci:test": "deno task test && deno task coverage:lcov",
+    "ci:doc": "deno doc --lint --no-remote mod.ts"
   },
   "fmt": {
     "indentWidth": 4,
