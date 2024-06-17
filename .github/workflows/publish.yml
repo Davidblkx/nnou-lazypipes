@@ -6,9 +6,13 @@ on:
       - master
 
 jobs:
-  run:
+  test:
     uses: ./.github/workflows/deno.yml
-    with:
-      publish: true
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx jsr publish

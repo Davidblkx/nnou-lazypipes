@@ -1,9 +1,6 @@
 on:
   workflow_call:
     inputs:
-      publish:
-        required: true
-        type: boolean
       deno_version:
         type: string
         default: "v1.x"
@@ -35,11 +32,4 @@ jobs:
             verbose: true
             fail_ci_if_error: true
             handle_no_reports_found: true
-  publish:
-    if: ${{ inputs.publish }}
-    needs: test-project
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: npx jsr publish
   

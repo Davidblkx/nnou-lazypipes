@@ -8,7 +8,5 @@ on:
 jobs:
   run:
     uses: ./.github/workflows/deno.yml
-    with:
-      publish: false
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
