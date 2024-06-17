@@ -18,9 +18,12 @@ jobs:
           deno-version: v1.x
       - run: deno test -A --coverage
       - run: deno coverage --lcov --output=./coverage/lcov.info
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v2.3.0
-        env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            verbose: true
+            fail_ci_if_error: true
+            handle_no_reports_found: true
       - run: ls ./coverage -al
       - run: npx jsr publish
