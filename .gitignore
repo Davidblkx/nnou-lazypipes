@@ -10,3 +10,9 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Test coverage
+coverage/
+
+# Test file
+_play.ts

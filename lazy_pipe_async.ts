@@ -1,36 +1,34 @@
 // deno-lint-ignore-file no-explicit-any
 import { type Result, type ResultAsync, ok, err } from '@nnou/result';
-import { fromResult, type AsyncOption } from '@nnou/option';
+import { fromResult, none, type OptionAsync } from '@nnou/option';
 
-import type { LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync } from './model.ts';
+import type { LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, ErrorHandler } from './model.ts';
 import { UnhandledError } from './errors.ts';
 
 export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsync<TIn, TOut, TErr> {
     #steps: LazyPipeStepAsync<any, any, any>[];
-    #catch?: (error: unknown) => NonNullable<TErr>;
+    #catch?: ErrorHandler<TErr>;
 
     constructor(
         steps: LazyPipeStepAsync<any, any, any>[] = [],
-        onCatch?: (error: unknown) => NonNullable<TErr>
+        onCatch?: ErrorHandler<TErr>
     ) {
         this.#steps = steps;
         this.#catch = onCatch;
     }
 
     next<T>(step: LazyPipeStep<TOut, T, TErr>): LazyPipeAsync<TIn, T, TErr> {
-        this.#steps.push(step);
-        return this as unknown as LazyPipeAsync<TIn, T, TErr>;
+        return new LazyPipeAsyncImpl([...this.#steps, step], this.#catch);
     }
 
     nextAsync<T>(step: LazyPipeStepAsync<TOut, T, TErr>): LazyPipeAsync<TIn, T, TErr> {
-        this.#steps.push(step);
-        return this as unknown as LazyPipeAsync<TIn, T, TErr>;
+        return new LazyPipeAsyncImpl([...this.#steps, step], this.#catch);
     }
 
-    catch(onError: (error: unknown) => NonNullable<TErr>): LazyPipeAsync<TIn, TOut, TErr> {
-        this.#catch = onError;
-        return this;
+    catch(onError: ErrorHandler<TErr>): LazyPipeAsync<TIn, TOut, TErr> {
+        return new LazyPipeAsyncImpl([...this.#steps], onError);
     }
+    
     async run(value?: NonNullable<TIn>): ResultAsync<TOut, TErr> {
         let result: Result<any, any> = ok(value as unknown as NonNullable<TIn>);
 
@@ -39,12 +37,10 @@ export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsy
                 if (result.ok) {
                     result = await step.onValue(result.value);
                 } else if (step.onError) {
-                    result = await step.onError(result.error, result);
+                    result = await step.onError(result.error);
                 }
             } catch (e) {
-                if (step.onError) {
-                    result = await step.onError(e, result);
-                } else if (this.#catch) {
+                if (this.#catch) {
                     result = err(this.#catch(e));
                 } else {
                     throw new UnhandledError(e);
@@ -54,12 +50,17 @@ export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsy
 
         return result;
     }
-    async safeRun(value?: NonNullable<TIn>): AsyncOption<TOut> {
-        const res = await this.run(value);
-        return fromResult(res);
+    async maybe(value?: NonNullable<TIn>): OptionAsync<TOut> {
+        try {
+            const res = await this.run(value);
+            return fromResult(res);
+        } catch {
+            return none();
+        }
+        
     }
 
-    async unsafeRun(value?: NonNullable<TIn>): Promise<TOut> {
+    async force(value?: NonNullable<TIn>): Promise<TOut> {
         const res = await this.run(value);
         if (res.ok) {
             return res.value;
