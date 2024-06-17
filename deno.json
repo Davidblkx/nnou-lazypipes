@@ -1,6 +1,6 @@
 {
   "name": "@nnou/lazy-pipes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "tasks": {
     "test": "deno test -A --coverage",
     "coverage:lcov": "deno coverage --lcov --output=./coverage/lcov.info",

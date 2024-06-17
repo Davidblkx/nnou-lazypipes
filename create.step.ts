@@ -30,21 +30,25 @@ export interface LazyPipeBuilder<TIn, TOut, TErr> {
 export function forSteps<TIn, TOut, TErr>(
     step1: LazyPipeStep<TIn, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
     step3: LazyPipeStep<T2, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
     step3: LazyPipeStep<T2, T3, TErr>,
     step4: LazyPipeStep<T3, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, T4, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
@@ -52,6 +56,7 @@ export function forSteps<TIn, T1, T2, T3, T4, TOut, TErr>(
     step4: LazyPipeStep<T3, T4, TErr>,
     step5: LazyPipeStep<T4, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, T4, T5, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
@@ -60,6 +65,7 @@ export function forSteps<TIn, T1, T2, T3, T4, T5, TOut, TErr>(
     step5: LazyPipeStep<T4, T5, TErr>,
     step6: LazyPipeStep<T5, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, T4, T5, T6, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
@@ -69,6 +75,7 @@ export function forSteps<TIn, T1, T2, T3, T4, T5, T6, TOut, TErr>(
     step6: LazyPipeStep<T5, T6, TErr>,
     step7: LazyPipeStep<T6, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, T4, T5, T6, T7, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
@@ -79,6 +86,7 @@ export function forSteps<TIn, T1, T2, T3, T4, T5, T6, T7, TOut, TErr>(
     step7: LazyPipeStep<T6, T7, TErr>,
     step8: LazyPipeStep<T7, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, T4, T5, T6, T7, T8, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
@@ -90,6 +98,7 @@ export function forSteps<TIn, T1, T2, T3, T4, T5, T6, T7, T8, TOut, TErr>(
     step8: LazyPipeStep<T7, T8, TErr>,
     step9: LazyPipeStep<T8, TOut, TErr>
 ): LazyPipeBuilder<TIn, TOut, TErr>;
+/** Builds a new pipeline for a sequence of steps. */
 export function forSteps<TIn, T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut, TErr>(
     step1: LazyPipeStep<TIn, T1, TErr>,
     step2: LazyPipeStep<T1, T2, TErr>,
