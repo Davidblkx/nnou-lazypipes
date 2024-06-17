@@ -22,5 +22,5 @@ jobs:
         uses: sonarsource/sonarcloud-github-action@v2.3.0
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - run: ls -al
+      - run: git status -s
       - run: npx jsr publish
