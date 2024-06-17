@@ -1,0 +1,45 @@
+on:
+  workflow_call:
+    inputs:
+      publish:
+        required: true
+        type: boolean
+      deno_version:
+        type: string
+        default: "v1.x"
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+
+jobs:
+  test-project:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: ${{ inputs.deno_version }}
+
+      - name: Run tests and generate coverage reports
+        run: deno task ci:test
+      - name: Run documentation lint
+        run: deno task ci:doc
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            verbose: true
+            fail_ci_if_error: true
+            handle_no_reports_found: true
+  publish:
+    if: ${{ inputs.publish }}
+    needs: test-project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx jsr publish
+  
