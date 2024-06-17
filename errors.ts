@@ -1,3 +1,7 @@
+
+/**
+ * Error class for unhandled errors.
+ */
 export class UnhandledError extends Error {
     innerErr: unknown;
 

@@ -1,6 +1,7 @@
 import type { Result, ResultAsync } from '@nnou/result';
 import type { Option, OptionAsync } from '@nnou/option';
 
+/** Function to handle exceptions */
 export type ErrorHandler<TErr> = (error: unknown) => NonNullable<TErr>;
 
 /** Synchronous step */

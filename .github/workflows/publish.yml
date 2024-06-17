@@ -13,4 +13,13 @@ jobs:
       id-token: write # The OIDC ID token is used for authentication with JSR.    
     steps:
       - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: deno test -A --coverage
+      - run: deno coverage --lcov --output=./coverage/lcov.info
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v2.3.0
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - run: npx jsr publish

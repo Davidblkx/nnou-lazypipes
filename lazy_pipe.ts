@@ -6,6 +6,7 @@ import type { LazyPipe, LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, ErrorHan
 import { UnhandledError } from './errors.ts';
 import { LazyPipeAsyncImpl } from './lazy_pipe_async.ts';
 
+/** Implementation of a synchronous pipeline */
 export class LazyPipeImpl<TIn, TOut, TErr = unknown> implements LazyPipe<TIn, TOut, TErr> {
     
     #steps: LazyPipeStep<any, any, any>[];

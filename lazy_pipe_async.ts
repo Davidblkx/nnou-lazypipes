@@ -5,6 +5,7 @@ import { fromResult, none, type OptionAsync } from '@nnou/option';
 import type { LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, ErrorHandler } from './model.ts';
 import { UnhandledError } from './errors.ts';
 
+/** Implementation of an asynchronous pipeline */
 export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsync<TIn, TOut, TErr> {
     #steps: LazyPipeStepAsync<any, any, any>[];
     #catch?: ErrorHandler<TErr>;
