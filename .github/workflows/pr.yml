@@ -1,0 +1,31 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  run-test:
+    name: Test using deno
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - run: deno test -A --coverage
+      - run: deno coverage --lcov --output=./coverage/lcov.info
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v2.3.0
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - run: ls ./coverage -al
