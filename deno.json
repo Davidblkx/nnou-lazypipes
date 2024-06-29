@@ -18,8 +18,8 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@^0.226.0",
-    "@nnou/option": "jsr:@nnou/option@^1.0.0",
-    "@nnou/result": "jsr:@nnou/result@^1.0.0"
+    "@nnou/option": "jsr:@nnou/option@^1.4.0",
+    "@nnou/result": "jsr:@nnou/result@^1.0.1"
   },
   "description": "Create lazy pipes with Rust-like Option/Result type",
   "exports": {

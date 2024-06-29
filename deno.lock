@@ -2,8 +2,8 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "jsr:@nnou/option@^1.0.0": "jsr:@nnou/option@1.4.0",
-      "jsr:@nnou/result@^1.0.0": "jsr:@nnou/result@1.0.1",
+      "jsr:@nnou/option@^1.4.0": "jsr:@nnou/option@1.4.0",
+      "jsr:@nnou/result@^1.0.1": "jsr:@nnou/result@1.0.1",
       "jsr:@std/assert@^0.225.2": "jsr:@std/assert@0.225.3",
       "jsr:@std/assert@^0.226.0": "jsr:@std/assert@0.226.0",
       "jsr:@std/internal@^1.0.0": "jsr:@std/internal@1.0.0",
@@ -43,8 +43,8 @@
   "remote": {},
   "workspace": {
     "dependencies": [
-      "jsr:@nnou/option@^1.0.0",
-      "jsr:@nnou/result@^1.0.0",
+      "jsr:@nnou/option@^1.4.0",
+      "jsr:@nnou/result@^1.0.1",
       "jsr:@std/assert@^0.226.0"
     ]
   }
