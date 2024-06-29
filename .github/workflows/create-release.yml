@@ -40,5 +40,7 @@ jobs:
       - run: |
           git config --global user.email "bot@davidpires.pt"
           git config --global user.name "Release Bot"
-      - name: Create Release
+      - name: Bump version
         run: deno task ci:bump -- ${{ inputs.type }}
+      - name: Publish release to JSR
+        run: npx jsr publish
