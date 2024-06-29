@@ -1,5 +1,5 @@
 import { emptyPipe } from './create.empty.ts';
-import { map, mapAsync } from '../operators/map.ts';
+import { map, mapAsync } from './map.ts';
 
 import { assertResultOkEqual, err, ok } from '@nnou/result';
 

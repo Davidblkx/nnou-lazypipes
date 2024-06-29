@@ -14,6 +14,12 @@ export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsy
         return this.#steps as LazyPipeStepsAsync<TIn, TOut, TErr>;
     }
 
+    get errHandler(): ErrorHandler<TErr> | undefined {
+        return this.#catch;
+    }
+
+    readonly isAsync = true;
+
     constructor(
         steps: LazyPipeStepAsync<any, any, any>[] = [],
         onCatch?: ErrorHandler<TErr>,

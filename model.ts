@@ -7,28 +7,34 @@ export type ErrorHandler<TErr> = (error: unknown) => NonNullable<TErr>;
 /** Synchronous step */
 export type LazyPipeStep<TIn, TOut, TErr> = {
     /** Logic to run when has ok value */
-    onValue: (value: TIn) => Result<TOut, TErr>,
+    onValue: (value: TIn) => Result<TOut, TErr>;
     /** Logic to run when has error value */
-    onError?: (error: TErr) => Result<TOut, TErr>
+    onError?: (error: TErr) => Result<TOut, TErr>;
 };
 
 /** Asynchronous step */
 export type LazyPipeStepAsync<TIn, TOut, TErr> = {
     /** Logic to run when has ok value */
-    onValue: (value: TIn) => (ResultAsync<TOut, TErr> | Result<TOut, TErr>),
+    onValue: (value: TIn) => ResultAsync<TOut, TErr> | Result<TOut, TErr>;
     /** Logic to run when has error value */
-    onError?: (error: TErr) => (ResultAsync<TOut, TErr> | Result<TOut, TErr>)
+    onError?: (error: TErr) => ResultAsync<TOut, TErr> | Result<TOut, TErr>;
 };
 
+/** Steps for a LazyPipe */
 export type LazyPipeSteps<TIn, TOut, TErr> = [
     LazyPipeStep<TIn, unknown, TErr>,
     ...LazyPipeStep<unknown, unknown, TErr>[],
-    LazyPipeStep<unknown, TOut, TErr>
+    LazyPipeStep<unknown, TOut, TErr>,
 ];
 
 /** Synchronous pipeline */
 export interface LazyPipe<TIn, TOut, TErr = unknown> {
+    /** Steps for current pipe */
     readonly steps: LazyPipeSteps<TIn, TOut, TErr>;
+    /** Error handler for pipe */
+    readonly errHandler?: ErrorHandler<TErr>;
+    /** true, when in LazyPipeAsync */
+    readonly isAsync: false;
 
     /** Creates a new pipeline with an extra step */
     next<T>(step: LazyPipeStep<TOut, T, TErr>): LazyPipe<TIn, T, TErr>;
@@ -44,15 +50,21 @@ export interface LazyPipe<TIn, TOut, TErr = unknown> {
     force(value?: NonNullable<TIn>): TOut;
 }
 
+/** Steps for a LazyPipeAsync */
 export type LazyPipeStepsAsync<TIn, TOut, TErr> = [
     LazyPipeStepAsync<TIn, unknown, TErr>,
     ...LazyPipeStepAsync<unknown, unknown, TErr>[],
-    LazyPipeStepAsync<unknown, TOut, TErr>
+    LazyPipeStepAsync<unknown, TOut, TErr>,
 ];
 
 /** Asynchronous pipeline */
 export interface LazyPipeAsync<TIn, TOut, TErr = unknown> {
+    /** Steps for current pipe */
     readonly steps: LazyPipeStepsAsync<TIn, TOut, TErr>;
+    /** Error handler for pipe */
+    readonly errHandler?: ErrorHandler<TErr>;
+    /** true, when in LazyPipeAsync */
+    readonly isAsync: true;
 
     /** Creates a new pipeline with an extra step */
     next<T>(step: LazyPipeStep<TOut, T, TErr>): LazyPipeAsync<TIn, T, TErr>;
