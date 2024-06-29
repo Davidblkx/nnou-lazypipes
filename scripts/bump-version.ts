@@ -85,7 +85,7 @@ const work = [
 for (const cmd of work) {
     const out = await cmd.output();
     if (!out.success) {
-        console.error(out.stderr);
+        console.error(new TextDecoder().decode(out.stderr));
         Deno.exit(1);
     }
 }
