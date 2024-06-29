@@ -1,20 +1,29 @@
 // deno-lint-ignore-file no-explicit-any
-import { type Result, ok, err } from '@nnou/result';
-import { type Option, fromResult, none } from '@nnou/option';
+import { err, ok, type Result } from '@nnou/result';
+import { fromResult, none, type Option } from '@nnou/option';
 
-import type { LazyPipe, LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, ErrorHandler } from './model.ts';
+import type { ErrorHandler, LazyPipe, LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, LazyPipeSteps } from './model.ts';
 import { UnhandledError } from './errors.ts';
 import { LazyPipeAsyncImpl } from './lazy_pipe_async.ts';
 
 /** Implementation of a synchronous pipeline */
 export class LazyPipeImpl<TIn, TOut, TErr = unknown> implements LazyPipe<TIn, TOut, TErr> {
-    
     #steps: LazyPipeStep<any, any, any>[];
     #catch?: ErrorHandler<TErr>;
 
+    get steps(): LazyPipeSteps<TIn, TOut, TErr> {
+        return this.#steps as LazyPipeSteps<TIn, TOut, TErr>;
+    }
+
+    get errHandler(): ErrorHandler<TErr> | undefined {
+        return this.#catch;
+    }
+
+    readonly isAsync = false;
+
     constructor(
         steps: LazyPipeStep<any, any, any>[] = [],
-        onCatch?: ErrorHandler<TErr>
+        onCatch?: ErrorHandler<TErr>,
     ) {
         this.#steps = steps;
         this.#catch = onCatch;
@@ -23,14 +32,14 @@ export class LazyPipeImpl<TIn, TOut, TErr = unknown> implements LazyPipe<TIn, TO
     next<T>(step: LazyPipeStep<TOut, T, TErr>): LazyPipe<TIn, T, TErr> {
         return new LazyPipeImpl([
             ...this.#steps,
-            step
+            step,
         ], this.#catch);
     }
 
     nextAsync<T>(step: LazyPipeStepAsync<TOut, T, TErr>): LazyPipeAsync<TIn, T, TErr> {
         return new LazyPipeAsyncImpl([
             ...this.#steps,
-            step
+            step,
         ], this.#catch);
     }
 

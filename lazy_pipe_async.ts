@@ -1,8 +1,8 @@
 // deno-lint-ignore-file no-explicit-any
-import { type Result, type ResultAsync, ok, err } from '@nnou/result';
+import { err, ok, type Result, type ResultAsync } from '@nnou/result';
 import { fromResult, none, type OptionAsync } from '@nnou/option';
 
-import type { LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, ErrorHandler } from './model.ts';
+import type { ErrorHandler, LazyPipeAsync, LazyPipeStep, LazyPipeStepAsync, LazyPipeStepsAsync } from './model.ts';
 import { UnhandledError } from './errors.ts';
 
 /** Implementation of an asynchronous pipeline */
@@ -10,9 +10,19 @@ export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsy
     #steps: LazyPipeStepAsync<any, any, any>[];
     #catch?: ErrorHandler<TErr>;
 
+    get steps(): LazyPipeStepsAsync<TIn, TOut, TErr> {
+        return this.#steps as LazyPipeStepsAsync<TIn, TOut, TErr>;
+    }
+
+    get errHandler(): ErrorHandler<TErr> | undefined {
+        return this.#catch;
+    }
+
+    readonly isAsync = true;
+
     constructor(
         steps: LazyPipeStepAsync<any, any, any>[] = [],
-        onCatch?: ErrorHandler<TErr>
+        onCatch?: ErrorHandler<TErr>,
     ) {
         this.#steps = steps;
         this.#catch = onCatch;
@@ -29,7 +39,7 @@ export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsy
     catch(onError: ErrorHandler<TErr>): LazyPipeAsync<TIn, TOut, TErr> {
         return new LazyPipeAsyncImpl([...this.#steps], onError);
     }
-    
+
     async run(value?: NonNullable<TIn>): ResultAsync<TOut, TErr> {
         let result: Result<any, any> = ok(value as unknown as NonNullable<TIn>);
 
@@ -58,7 +68,6 @@ export class LazyPipeAsyncImpl<TIn, TOut, TErr = unknown> implements LazyPipeAsy
         } catch {
             return none();
         }
-        
     }
 
     async force(value?: NonNullable<TIn>): Promise<TOut> {

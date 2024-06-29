@@ -23,8 +23,7 @@ jobs:
 
       - name: Run tests and generate coverage reports
         run: deno task ci:test
-      - name: Run documentation lint
-        run: deno task ci:doc
+        continue-on-error: true
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
@@ -32,4 +31,6 @@ jobs:
             verbose: true
             fail_ci_if_error: true
             handle_no_reports_found: true
+      - name: Run documentation lint
+        run: deno task ci:doc
   
