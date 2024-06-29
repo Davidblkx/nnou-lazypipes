@@ -20,8 +20,16 @@ export type LazyPipeStepAsync<TIn, TOut, TErr> = {
     onError?: (error: TErr) => (ResultAsync<TOut, TErr> | Result<TOut, TErr>)
 };
 
+export type LazyPipeSteps<TIn, TOut, TErr> = [
+    LazyPipeStep<TIn, unknown, TErr>,
+    ...LazyPipeStep<unknown, unknown, TErr>[],
+    LazyPipeStep<unknown, TOut, TErr>
+];
+
 /** Synchronous pipeline */
 export interface LazyPipe<TIn, TOut, TErr = unknown> {
+    readonly steps: LazyPipeSteps<TIn, TOut, TErr>;
+
     /** Creates a new pipeline with an extra step */
     next<T>(step: LazyPipeStep<TOut, T, TErr>): LazyPipe<TIn, T, TErr>;
     /** Creates a new async pipeline with an extra step */
@@ -36,8 +44,16 @@ export interface LazyPipe<TIn, TOut, TErr = unknown> {
     force(value?: NonNullable<TIn>): TOut;
 }
 
+export type LazyPipeStepsAsync<TIn, TOut, TErr> = [
+    LazyPipeStepAsync<TIn, unknown, TErr>,
+    ...LazyPipeStepAsync<unknown, unknown, TErr>[],
+    LazyPipeStepAsync<unknown, TOut, TErr>
+];
+
 /** Asynchronous pipeline */
 export interface LazyPipeAsync<TIn, TOut, TErr = unknown> {
+    readonly steps: LazyPipeStepsAsync<TIn, TOut, TErr>;
+
     /** Creates a new pipeline with an extra step */
     next<T>(step: LazyPipeStep<TOut, T, TErr>): LazyPipeAsync<TIn, T, TErr>;
     /** Creates a new async pipeline with an extra step */
