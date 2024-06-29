@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
-import type { LazyPipeAsync, LazyPipeStepAsync, ErrorHandler } from './model.ts';
-import { LazyPipeAsyncImpl } from './lazy_pipe_async.ts';
+import type { ErrorHandler, LazyPipeAsync, LazyPipeStepAsync } from '../model.ts';
+import { LazyPipeAsyncImpl } from '../lazy_pipe_async.ts';
 
 /** Helper to builds a new pipeline for a sequence of steps. */
 export interface LazyPipeBuilderAsync<TIn, TOut, TErr> {
@@ -14,39 +14,39 @@ export interface LazyPipeBuilderAsync<TIn, TOut, TErr> {
 
 /**
  * Builds a new pipeline for a sequence of steps.
- * 
+ *
  * @example
  * ```ts
  * const pipe = forStepsAsync(
  *    mapAsync((value: number) => Promise.resolve(BigInt(value + 1))),
  *    map(value => value.toString()),
  * ).catchDefault('an error').create();
- * 
+ *
  * assertResultOkEqual(await pipe.run(1), '2');
  * ```
- * 
+ *
  * @param step1 first step of the pipeline
  */
 export function forStepsAsync<TIn, TOut, TErr>(
-    step1: LazyPipeStepAsync<TIn, TOut, TErr>
+    step1: LazyPipeStepAsync<TIn, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, TOut, TErr>(
     step1: LazyPipeStepAsync<TIn, T1, TErr>,
-    step2: LazyPipeStepAsync<T1, TOut, TErr>
+    step2: LazyPipeStepAsync<T1, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, TOut, TErr>(
     step1: LazyPipeStepAsync<TIn, T1, TErr>,
     step2: LazyPipeStepAsync<T1, T2, TErr>,
-    step3: LazyPipeStepAsync<T2, TOut, TErr>
+    step3: LazyPipeStepAsync<T2, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, TOut, TErr>(
     step1: LazyPipeStepAsync<TIn, T1, TErr>,
     step2: LazyPipeStepAsync<T1, T2, TErr>,
     step3: LazyPipeStepAsync<T2, T3, TErr>,
-    step4: LazyPipeStepAsync<T3, TOut, TErr>
+    step4: LazyPipeStepAsync<T3, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, T4, TOut, TErr>(
@@ -54,7 +54,7 @@ export function forStepsAsync<TIn, T1, T2, T3, T4, TOut, TErr>(
     step2: LazyPipeStepAsync<T1, T2, TErr>,
     step3: LazyPipeStepAsync<T2, T3, TErr>,
     step4: LazyPipeStepAsync<T3, T4, TErr>,
-    step5: LazyPipeStepAsync<T4, TOut, TErr>
+    step5: LazyPipeStepAsync<T4, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, T4, T5, TOut, TErr>(
@@ -63,7 +63,7 @@ export function forStepsAsync<TIn, T1, T2, T3, T4, T5, TOut, TErr>(
     step3: LazyPipeStepAsync<T2, T3, TErr>,
     step4: LazyPipeStepAsync<T3, T4, TErr>,
     step5: LazyPipeStepAsync<T4, T5, TErr>,
-    step6: LazyPipeStepAsync<T5, TOut, TErr>
+    step6: LazyPipeStepAsync<T5, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, TOut, TErr>(
@@ -73,7 +73,7 @@ export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, TOut, TErr>(
     step4: LazyPipeStepAsync<T3, T4, TErr>,
     step5: LazyPipeStepAsync<T4, T5, TErr>,
     step6: LazyPipeStepAsync<T5, T6, TErr>,
-    step7: LazyPipeStepAsync<T6, TOut, TErr>
+    step7: LazyPipeStepAsync<T6, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, T7, TOut, TErr>(
@@ -84,7 +84,7 @@ export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, T7, TOut, TErr>(
     step5: LazyPipeStepAsync<T4, T5, TErr>,
     step6: LazyPipeStepAsync<T5, T6, TErr>,
     step7: LazyPipeStepAsync<T6, T7, TErr>,
-    step8: LazyPipeStepAsync<T7, TOut, TErr>
+    step8: LazyPipeStepAsync<T7, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, T7, T8, TOut, TErr>(
@@ -96,7 +96,7 @@ export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, T7, T8, TOut, TErr>(
     step6: LazyPipeStepAsync<T5, T6, TErr>,
     step7: LazyPipeStepAsync<T6, T7, TErr>,
     step8: LazyPipeStepAsync<T7, T8, TErr>,
-    step9: LazyPipeStepAsync<T8, TOut, TErr>
+    step9: LazyPipeStepAsync<T8, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 /** Builds a new pipeline for a sequence of steps. */
 export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut, TErr>(
@@ -109,7 +109,7 @@ export function forStepsAsync<TIn, T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut, TEr
     step7: LazyPipeStepAsync<T6, T7, TErr>,
     step8: LazyPipeStepAsync<T7, T8, TErr>,
     step9: LazyPipeStepAsync<T8, T9, TErr>,
-    step10: LazyPipeStepAsync<T9, TOut, TErr>
+    step10: LazyPipeStepAsync<T9, TOut, TErr>,
 ): LazyPipeBuilderAsync<TIn, TOut, TErr>;
 export function forStepsAsync(...steps: LazyPipeStepAsync<any, any, any>[]): LazyPipeBuilderAsync<any, any, any> {
     return new LazyPipeAsyncBuilderImpl(steps);
