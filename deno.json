@@ -6,7 +6,8 @@
     "coverage:lcov": "deno coverage --lcov --output=./coverage/lcov.info",
     "coverage:html": "deno coverage --html",
     "ci:test": "deno task test && deno task coverage:lcov",
-    "ci:doc": "deno doc --lint --no-remote mod.ts"
+    "ci:doc": "deno doc --lint --no-remote mod.ts",
+    "ci:bump": "deno run -A scripts/bump-version.ts"
   },
   "fmt": {
     "indentWidth": 4,

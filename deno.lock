@@ -4,8 +4,11 @@
     "specifiers": {
       "jsr:@nnou/option@^1.0.0": "jsr:@nnou/option@1.4.0",
       "jsr:@nnou/result@^1.0.0": "jsr:@nnou/result@1.0.1",
+      "jsr:@std/assert@^0.225.2": "jsr:@std/assert@0.225.3",
       "jsr:@std/assert@^0.226.0": "jsr:@std/assert@0.226.0",
-      "jsr:@std/internal@^1.0.0": "jsr:@std/internal@1.0.0"
+      "jsr:@std/internal@^1.0.0": "jsr:@std/internal@1.0.0",
+      "jsr:@std/jsonc": "jsr:@std/jsonc@0.224.3",
+      "jsr:@std/path": "jsr:@std/path@0.225.1"
     },
     "jsr": {
       "@nnou/option@1.4.0": {
@@ -13,6 +16,9 @@
       },
       "@nnou/result@1.0.1": {
         "integrity": "c0e6611eb21c2139ae7790f5d1d603f4c0cc455d0998c434966df4e2977e8168"
+      },
+      "@std/assert@0.225.3": {
+        "integrity": "b3c2847aecf6955b50644cdb9cf072004ea3d1998dd7579fc0acb99dbb23bd4f"
       },
       "@std/assert@0.226.0": {
         "integrity": "0dfb5f7c7723c18cec118e080fec76ce15b4c31154b15ad2bd74822603ef75b3",
@@ -22,6 +28,15 @@
       },
       "@std/internal@1.0.0": {
         "integrity": "ac6a6dfebf838582c4b4f61a6907374e27e05bedb6ce276e0f1608fe84e7cd9a"
+      },
+      "@std/jsonc@0.224.3": {
+        "integrity": "c10770a31489f5b85a3562d9b107c497666d8b6a49291ee2711d84da2616c2d6"
+      },
+      "@std/path@0.225.1": {
+        "integrity": "8c3220635a73730eb51fe43de9e10b79e2724a5bb8638b9355d35ae012fd9429",
+        "dependencies": [
+          "jsr:@std/assert@^0.225.2"
+        ]
       }
     }
   },
