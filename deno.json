@@ -27,6 +27,6 @@
   },
   "publish": {
     "include": ["LICENSE", "README.md", "**/*.ts"],
-    "exclude": ["**/*.test.ts"]
+    "exclude": ["**/*.test.ts", "scripts/**"]
   }
 }
