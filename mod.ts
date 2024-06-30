@@ -39,9 +39,11 @@
  * ```
  */
 
+export * from './operators/concat.ts';
 export * from './operators/create.empty.ts';
 export * from './operators/create.step.ts';
 export * from './operators/create.async.ts';
 export * from './errors.ts';
 export * from './operators/map.ts';
+export * from './operators/merge.ts';
 export * from './model.ts';
